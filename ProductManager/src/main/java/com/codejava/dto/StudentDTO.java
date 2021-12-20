@@ -1,5 +1,6 @@
 package com.codejava.dto;
 
+import com.codejava.entity.School;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,5 @@ public class StudentDTO {
     private Long studentId;
     private String studentName;
     private String phone;
-    private Long schoolId;
-    private String schoolName;
-    private String schoolAddress;
+    private School school;
 }

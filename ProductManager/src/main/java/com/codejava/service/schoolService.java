@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class schoolService {
@@ -25,11 +26,14 @@ public class schoolService {
     }
 
     public void update(School schoolRequest, Long id) {
-        School school = repo.findById(id).orElse(null);
-        if (school != null) {
+        Optional<School> s = repo.findById(id);
+        if (s.isPresent()) {
+            School school = s.orElse(null);
             school.setSchoolName(schoolRequest.getSchoolName());
             school.setAddress(schoolRequest.getAddress());
-            school.setStudentList(schoolRequest.getStudentList());
+            if (schoolRequest.getStudentList() != null) {
+                school.setStudentList(schoolRequest.getStudentList());
+            }
             repo.save(school);
         }
     }

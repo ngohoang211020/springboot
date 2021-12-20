@@ -11,7 +11,8 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 @Entity
-@Table
+@Table(name = "school")
+
 public class School {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,6 @@ public class School {
     private String schoolName;
     @Column
     private String address;
-    @OneToMany(mappedBy = "school",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "school",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Student> studentList;
 }

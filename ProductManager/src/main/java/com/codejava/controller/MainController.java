@@ -55,9 +55,9 @@ public class MainController {
 
     @PostMapping("/students")
     public ResponseEntity<?> createStudent(@RequestBody StudentDTO studentDTO) {
-        System.out.println(studentDTO.getSchoolId());
+        Student s = StudentMapper.INSTANCE.studentDTOToStudent(studentDTO);
         try {
-            studentService.save(StudentMapper.INSTANCE.studentDTOToStudent(studentDTO));
+            studentService.save(s);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -79,7 +79,6 @@ public class MainController {
         try {
             studentService.update(StudentMapper.INSTANCE.studentDTOToStudent(studentDTO), id);
             return new ResponseEntity<>(HttpStatus.OK);
-
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

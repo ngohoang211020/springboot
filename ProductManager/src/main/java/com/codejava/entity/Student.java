@@ -1,6 +1,5 @@
 package com.codejava.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -10,8 +9,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table
+@Table(name = "student")
 @RequiredArgsConstructor
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,6 @@ public class Student {
     @Column
     private String phone;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name="school_id"), name="school_id", nullable = false)
+    @JoinColumn(name = "school_id")
     private School school;
 }
