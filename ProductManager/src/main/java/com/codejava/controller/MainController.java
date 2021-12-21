@@ -2,6 +2,7 @@ package com.codejava.controller;
 
 import com.codejava.dto.SchoolDTO;
 import com.codejava.dto.StudentDTO;
+import com.codejava.dto.StudentINFO;
 import com.codejava.entity.Student;
 import com.codejava.mapper.SchoolMapper;
 import com.codejava.mapper.StudentMapper;
@@ -34,10 +35,10 @@ public class MainController {
     }
 
     @GetMapping("/students")
-    public ResponseEntity<List<StudentDTO>> getListStudent() {
-        List<StudentDTO> list = studentService.getAll().stream().map(student -> StudentMapper.INSTANCE.studentToStudentDTO(student)).collect(Collectors.toList());
+    public ResponseEntity<List<StudentINFO>> getListStudent() {
+        List<StudentINFO> list = studentService.getAll().stream().map(student -> StudentMapper.INSTANCE.studenToStudentINFO(student)).collect(Collectors.toList());
         if (!list.isEmpty()) {
-            return new ResponseEntity<List<StudentDTO>>(list, HttpStatus.OK);
+            return new ResponseEntity<List<StudentINFO>>(list, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

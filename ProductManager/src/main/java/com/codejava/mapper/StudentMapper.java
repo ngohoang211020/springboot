@@ -1,6 +1,7 @@
 package com.codejava.mapper;
 
 import com.codejava.dto.StudentDTO;
+import com.codejava.dto.StudentINFO;
 import com.codejava.entity.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -12,5 +13,5 @@ public interface StudentMapper {
     StudentDTO studentToStudentDTO(Student student);
 
     Student studentDTOToStudent(StudentDTO studentDTO);
-
+    StudentINFO studenToStudentINFO(Student student);
 }
