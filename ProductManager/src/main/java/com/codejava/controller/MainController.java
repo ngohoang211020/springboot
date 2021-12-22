@@ -3,9 +3,6 @@ package com.codejava.controller;
 import com.codejava.dto.SchoolDTO;
 import com.codejava.dto.StudentDTO;
 import com.codejava.dto.StudentINFO;
-import com.codejava.entity.Student;
-import com.codejava.mapper.SchoolMapper;
-import com.codejava.mapper.StudentMapper;
 import com.codejava.service.schoolService;
 import com.codejava.service.studentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1")
@@ -26,28 +22,29 @@ public class MainController {
 
     @GetMapping("/schools")
     public ResponseEntity<List<SchoolDTO>> getListSchool() {
-        List<SchoolDTO> list = schoolService.getAll().stream().map(school -> SchoolMapper.INSTANCE.schoolToSchoolDTO(school)).collect(Collectors.toList());
-        if (!list.isEmpty()) {
-            return new ResponseEntity<List<SchoolDTO>>(list, HttpStatus.OK);
-        } else {
+        try {
+            return new ResponseEntity<List<SchoolDTO>>(schoolService.getAll(), HttpStatus.OK);
+
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         }
     }
 
     @GetMapping("/students")
     public ResponseEntity<List<StudentINFO>> getListStudent() {
-        List<StudentINFO> list = studentService.getAll().stream().map(student -> StudentMapper.INSTANCE.studenToStudentINFO(student)).collect(Collectors.toList());
-        if (!list.isEmpty()) {
-            return new ResponseEntity<List<StudentINFO>>(list, HttpStatus.OK);
-        } else {
+        try {
+            return new ResponseEntity<List<StudentINFO>>(studentService.getAll(), HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         }
     }
 
     @PostMapping("/schools")
     public ResponseEntity<?> createSchool(@RequestBody SchoolDTO schoolDTO) {
         try {
-            schoolService.save(SchoolMapper.INSTANCE.schoolDTOToSchool(schoolDTO));
+            schoolService.save(schoolDTO);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -56,9 +53,8 @@ public class MainController {
 
     @PostMapping("/students")
     public ResponseEntity<?> createStudent(@RequestBody StudentDTO studentDTO) {
-        Student s = StudentMapper.INSTANCE.studentDTOToStudent(studentDTO);
         try {
-            studentService.save(s);
+            studentService.save(studentDTO);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NullPointerException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -68,7 +64,7 @@ public class MainController {
     @PutMapping("/schools/{id}")
     public ResponseEntity<?> updateSchool(@RequestBody SchoolDTO schoolDTO, @PathVariable(name = "id") Long id) {
         try {
-            schoolService.update(SchoolMapper.INSTANCE.schoolDTOToSchool(schoolDTO), id);
+            schoolService.update(schoolDTO, id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -78,7 +74,7 @@ public class MainController {
     @PutMapping("/students/{id}")
     public ResponseEntity<?> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable(name = "id") Long id) {
         try {
-            studentService.update(StudentMapper.INSTANCE.studentDTOToStudent(studentDTO), id);
+            studentService.update(studentDTO, id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

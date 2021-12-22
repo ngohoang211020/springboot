@@ -1,7 +1,6 @@
 package com.codejava.entity;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "student")
-@RequiredArgsConstructor
 
 public class Student {
     @Id
