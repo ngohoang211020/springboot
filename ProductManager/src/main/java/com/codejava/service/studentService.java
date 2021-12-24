@@ -4,6 +4,7 @@ import com.codejava.dto.StudentDTO;
 import com.codejava.dto.StudentINFO;
 import com.codejava.entity.Student;
 import com.codejava.mapper.StudentMapper;
+import com.codejava.projection.StudentDetail;
 import com.codejava.repository.studentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,9 @@ public class studentService {
 
     public void delete(Long id) {
         repo.deleteById(id);
+    }
+
+    public StudentDetail findByPhone(String phone) {
+        return repo.findByPhone(phone);
     }
 }

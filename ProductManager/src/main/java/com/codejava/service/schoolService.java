@@ -3,6 +3,7 @@ package com.codejava.service;
 import com.codejava.dto.SchoolDTO;
 import com.codejava.entity.School;
 import com.codejava.mapper.SchoolMapper;
+import com.codejava.projection.SchoolDetail;
 import com.codejava.repository.schoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,9 @@ public class schoolService {
 
     public void delete(Long id) {
         repo.deleteById(id);
+    }
+
+    public SchoolDetail findByAddress(String address) {
+        return repo.findByAddress(address);
     }
 }
